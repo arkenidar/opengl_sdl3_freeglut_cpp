@@ -135,6 +135,13 @@ void render()
         camera_angle -= 360;
 }
 
+typedef struct
+{
+    SDL_Window *window;
+    bool fullscreen;
+} AppState;
+AppState as;
+
 int main(int argc, char *argv[])
 {
     SDL_Window *window = NULL;
@@ -155,6 +162,9 @@ int main(int argc, char *argv[])
         SDL_Log("Window could not be created! SDL_Error: %s\n", SDL_GetError());
         return 1;
     }
+    as.window = window;
+    as.fullscreen = true;
+    SDL_SetWindowFullscreen(as.window, as.fullscreen);
 
     gl_context = SDL_GL_CreateContext(window);
     if (!gl_context)
@@ -204,6 +214,13 @@ int main(int argc, char *argv[])
                     // Quit the application
                     quit = 1;
                     break;
+                case SDL_SCANCODE_F:
+                {
+                    // Toggle fullscreen.
+                    as.fullscreen = !as.fullscreen;
+                    SDL_SetWindowFullscreen(as.window, as.fullscreen);
+                    break;
+                }
                 default:
                     break;
                 }
