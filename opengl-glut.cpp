@@ -128,7 +128,7 @@ void render()
         glPushMatrix();
         glTranslatef(0.0f, 0.5f, 2.0f);
         glColor3f(0.8f, 0.3f, 0.3f);
-        glutSolidSphere(0.4, 20, 20);
+        glutSolidSphere(0.4, 40, 40);
         glPopMatrix();
 
         // Draw a dodecahedron below the scene
