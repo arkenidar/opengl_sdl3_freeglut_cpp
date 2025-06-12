@@ -54,6 +54,8 @@
 // sudo apt install freeglut3-dev # !important GLUT for OpenGL
 #include <GL/glut.h> // For glut functions
 
+#include "obj.h"
+
 // OpenGL rendering context
 SDL_GLContext gl_context;
 
@@ -98,34 +100,40 @@ void render()
     // Rotate the entire scene
     glRotatef(camera_angle, 0, 1, 0);
 
-    // Draw the teapot (using GLUT's teapot)
-    glPushMatrix();
-    glTranslatef(-1.5f, 0.0f, 0.0f);
-    glColor3f(0.7f, 0.5f, 0.2f);
-    glutSolidTeapot(0.8);
-    glPopMatrix();
+    // draw_box(1.0f); // Draw a cube at the origin
+    draw_model(model1); // Draw the loaded model (e.g., a head)
 
-    // Draw a torus
-    glPushMatrix();
-    glTranslatef(1.5f, 0.0f, 0.0f);
-    glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
-    glColor3f(0.3f, 0.6f, 0.8f);
-    glutSolidTorus(0.2, 0.6, 20, 20);
-    glPopMatrix();
+    if (false)
+    {
+        // Draw the teapot (using GLUT's teapot)
+        glPushMatrix();
+        glTranslatef(-1.5f, 0.0f, 0.0f);
+        glColor3f(0.7f, 0.5f, 0.2f);
+        glutSolidTeapot(0.8);
+        glPopMatrix();
 
-    // Draw a sphere above the scene
-    glPushMatrix();
-    glTranslatef(0.0f, 1.5f, 0.0f);
-    glColor3f(0.8f, 0.3f, 0.3f);
-    glutSolidSphere(0.4, 20, 20);
-    glPopMatrix();
+        // Draw a torus
+        glPushMatrix();
+        glTranslatef(1.5f, 0.0f, 0.0f);
+        glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
+        glColor3f(0.3f, 0.6f, 0.8f);
+        glutSolidTorus(0.2, 0.6, 20, 20);
+        glPopMatrix();
 
-    // Draw a dodecahedron below the scene
-    glPushMatrix();
-    glTranslatef(0.0f, -1.5f, 0.0f);
-    glColor3f(0.5f, 0.8f, 0.2f);
-    glutSolidDodecahedron();
-    glPopMatrix();
+        // Draw a sphere above the scene
+        glPushMatrix();
+        glTranslatef(0.0f, 1.5f, 0.0f);
+        glColor3f(0.8f, 0.3f, 0.3f);
+        glutSolidSphere(0.4, 20, 20);
+        glPopMatrix();
+
+        // Draw a dodecahedron below the scene
+        glPushMatrix();
+        glTranslatef(0.0f, -1.5f, 0.0f);
+        glColor3f(0.5f, 0.8f, 0.2f);
+        glutSolidDodecahedron();
+        glPopMatrix();
+    }
 
     // Restore the matrix
     glPopMatrix();
@@ -183,6 +191,8 @@ int main(int argc, char *argv[])
     glViewport(0, 0, width, height);
     glMatrixMode(GL_PROJECTION);
     gluPerspective(45.0, (double)width / height, 0.1, 100.0);
+
+    init_models(); // Load models if needed, e.g., a cube or other shapes
 
     // Main loop
 
