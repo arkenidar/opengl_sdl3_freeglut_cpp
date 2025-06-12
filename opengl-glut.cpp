@@ -164,7 +164,7 @@ int main(int argc, char *argv[])
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 
-    window = SDL_CreateWindow("SDL3 OpenGL GLUT Objects", 800, 600, SDL_WINDOW_OPENGL);
+    window = SDL_CreateWindow("SDL3 OpenGL GLUT Objects", 800, 600, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
     if (!window)
     {
         SDL_Log("Window could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -228,12 +228,33 @@ int main(int argc, char *argv[])
                 {
                     // Toggle fullscreen.
                     as.fullscreen = !as.fullscreen;
-                    SDL_SetWindowFullscreen(as.window, as.fullscreen);
+                    SDL_SetWindowFullscreen(as.window, as.fullscreen ? SDL_WINDOW_FULLSCREEN : 0);
+                    // Update viewport and projection matrix after changing fullscreen state
+                    int w, h;
+                    SDL_GetWindowSizeInPixels(as.window, &w, &h); // Use InPixels for accuracy
+                    glViewport(0, 0, w, h);
+                    glMatrixMode(GL_PROJECTION);
+                    glLoadIdentity();                                              // Reset projection matrix
+                    gluPerspective(45.0, (double)w / (h > 0 ? h : 1), 0.1, 100.0); // Recalculate perspective
+                    glMatrixMode(GL_MODELVIEW);                                    // Switch back to modelview
+                    SDL_Log("Toggled fullscreen. New viewport: %dx%d", w, h);
                     break;
                 }
                 default:
                     break;
                 }
+            }
+            // It's also good practice to handle window resize events
+            else if (e.type == SDL_EVENT_WINDOW_RESIZED || e.type == SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED)
+            {
+                int w, h;
+                SDL_GetWindowSizeInPixels(as.window, &w, &h);
+                glViewport(0, 0, w, h);
+                glMatrixMode(GL_PROJECTION);
+                glLoadIdentity();
+                gluPerspective(45.0, (double)w / (h > 0 ? h : 1), 0.1, 100.0);
+                glMatrixMode(GL_MODELVIEW);
+                SDL_Log("Window resized/pixel size changed. New viewport: %dx%d", w, h);
             }
         } // End SDL_PollEvent loop
 
