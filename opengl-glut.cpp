@@ -107,6 +107,7 @@ void render()
     {
         // Draw the teapot (using GLUT's teapot)
         glPushMatrix();
+        glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
         glTranslatef(-1.5f, 0.0f, 0.0f);
         glColor3f(0.7f, 0.5f, 0.2f);
         glutSolidTeapot(0.8);
@@ -114,22 +115,22 @@ void render()
 
         // Draw a torus
         glPushMatrix();
-        glTranslatef(1.5f, 0.0f, 0.0f);
-        glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
+        glTranslatef(-1.5f, 0.0f, 0.0f);
+        glRotatef(0.0f, 1.0f, 0.0f, 0.0f);
         glColor3f(0.3f, 0.6f, 0.8f);
-        glutSolidTorus(0.2, 0.6, 20, 20);
+        glutSolidTorus(0.2, 0.6, 20, 40);
         glPopMatrix();
 
         // Draw a sphere above the scene
         glPushMatrix();
-        glTranslatef(0.0f, 1.5f, 0.0f);
+        glTranslatef(0.0f, 0.5f, 2.0f);
         glColor3f(0.8f, 0.3f, 0.3f);
         glutSolidSphere(0.4, 20, 20);
         glPopMatrix();
 
         // Draw a dodecahedron below the scene
         glPushMatrix();
-        glTranslatef(0.0f, -1.5f, 0.0f);
+        glTranslatef(0.0f, -2.0f, 0.0f);
         glColor3f(0.5f, 0.8f, 0.2f);
         glutSolidDodecahedron();
         glPopMatrix();
@@ -171,8 +172,8 @@ int main(int argc, char *argv[])
         return 1;
     }
     as.window = window;
-    as.fullscreen = true;
-    SDL_SetWindowFullscreen(as.window, as.fullscreen);
+    as.fullscreen = false;
+    SDL_SetWindowFullscreen(as.window, as.fullscreen ? SDL_WINDOW_FULLSCREEN : 0);
 
     gl_context = SDL_GL_CreateContext(window);
     if (!gl_context)
