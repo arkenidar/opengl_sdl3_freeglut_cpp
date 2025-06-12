@@ -103,7 +103,7 @@ void render()
     // draw_box(1.0f); // Draw a cube at the origin
     draw_model(model1); // Draw the loaded model (e.g., a head)
 
-    if (false)
+    if (true) // Change to false to disable drawing of additional objects
     {
         // Draw the teapot (using GLUT's teapot)
         glPushMatrix();
