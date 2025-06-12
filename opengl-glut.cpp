@@ -67,6 +67,9 @@ void initGL()
     glEnable(GL_DEPTH_TEST);
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
+    // Enable multisampling for antialiasing
+    glEnable(GL_MULTISAMPLE);
+
     // Set up lighting
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
@@ -164,6 +167,10 @@ int main(int argc, char *argv[])
     // Request OpenGL 2.1 context
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+
+    // Enable multisampling (antialiasing)
+    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 4); // 4x MSAA
 
     window = SDL_CreateWindow("SDL3 OpenGL GLUT Objects", 800, 600, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
     if (!window)
