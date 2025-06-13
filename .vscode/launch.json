@@ -50,8 +50,11 @@
       "request": "launch",
       "program": "${workspaceFolder}/build/app",
       "args": [],
-      "cwd": "${workspaceFolder}",
-      "preLaunchTask": "CMake: build"
+      "cwd": "${workspaceFolder}/build",
+      "preLaunchTask": "CMake: build",
+      "env": {
+        "PATH": "${workspaceFolder}/os-windows:${env:PATH}"
+      }
     }
   ],
   "version": "0.2.0"
